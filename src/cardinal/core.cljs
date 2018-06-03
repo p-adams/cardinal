@@ -12,11 +12,12 @@
   (str url "/" data "/" type "?json"))
 
 (defn get-fact []
-  (GET (format-base-url base-url (:input @app-state) (:type @app-state)) {:response-format :json
-                                                                                :keywords?       true
-                                                                                :handler
-                                                                                                 (fn [response]
-                                                                                                   (swap! app-state assoc :fact (:text response)))}))
+  (GET (format-base-url base-url (:input @app-state) (:type @app-state))
+       {:response-format :json
+        :keywords?       true
+        :handler
+                         (fn [response]
+                           (swap! app-state assoc :fact (:text response)))}))
 
 (defn app-form [])
 
@@ -26,20 +27,20 @@
 (defn app-navbar [])
 
 (defn app []
-    (fn []
-      [:div
-       [:h1 "Cardinal"]
-       [:div
-        [:p "Fact about 44"]
-        [:button {:on-click get-fact} "load fact"]
-        [:p (:fact @app-state)]
-        (app-input)]]))
+  (fn []
+    [:div
+     [:h1 "Cardinal"]
+     [:div
+      [:p "Fact about 44"]
+      [:button {:on-click get-fact} "load fact"]
+      [:p (:fact @app-state)]
+      (app-input)]]))
 
 (reagent/render-component [app]
                           (. js/document (getElementById "app")))
 
 (defn on-js-reload [])
-  ;; optionally touch your app-state to force rerendering depending on
-  ;; your application
-  ;; (swap! app-state update-in [:__figwheel_counter] inc)
+;; optionally touch your app-state to force rerendering depending on
+;; your application
+;; (swap! app-state update-in [:__figwheel_counter] inc)
 
