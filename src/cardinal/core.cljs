@@ -17,15 +17,23 @@
         :keywords?       true
         :handler
                          (fn [response]
-                           (swap! app-state assoc :text (:text response)))}))
-
-(defn app-form [])
+                           (swap! app-state assoc :text (:text response)))})
+  (swap! app-state assoc :input ""))
 
 (defn app-input []
-  [:input {:type "text"
-           :placeholder "Enter a number"
-           :value (:input @app-state)
-           :on-change #(swap! app-state assoc :input (-> % .-target .-value))}])
+  [:input {:type        "text"
+           :placeholder "Type a number"
+           :value       (:input @app-state)
+           :on-change   (fn [e] (swap! app-state assoc :input (.. e -target -value)))}])
+
+
+(defn app-form []
+  [:div
+   [:label ""]
+   (app-input)
+   [:button {:on-click get-fact
+             :disabled (= (count (:input @app-state)) 0)} "load fact"]])
+
 
 (defn app-header []
   [:header "Cardinal"])
@@ -34,15 +42,11 @@
   [:div text])
 
 (defn app []
-  (fn []
     [:div
      (app-header)
      [:div
-      [:p "Fact about 44"]
-      [:button {:on-click get-fact} "load fact"]
-      [:p (:text @app-state)]
-      [:p (str "User typed " (:input @app-state))]
-      (app-input)]]))
+      (app-card (:text @app-state))
+      (app-form)]])
 
 (reagent/render-component [app]
                           (. js/document (getElementById "app")))
