@@ -6,7 +6,7 @@
 
 (defonce base-url "http://numbersapi.com")
 
-(defonce app-state (atom {:fact "" :input "44" :type "math"}))
+(defonce app-state (atom {:text "" :input "" :type "math"}))
 
 (defn format-base-url [url data type]
   (str url "/" data "/" type "?json"))
@@ -17,23 +17,31 @@
         :keywords?       true
         :handler
                          (fn [response]
-                           (swap! app-state assoc :fact (:text response)))}))
+                           (swap! app-state assoc :text (:text response)))}))
 
 (defn app-form [])
 
 (defn app-input []
-  [:input {:type "text" :placeholder "Enter a number"}])
+  [:input {:type "text"
+           :placeholder "Enter a number"
+           :value (:input @app-state)
+           :on-change #(swap! app-state assoc :input (-> % .-target .-value))}])
 
-(defn app-navbar [])
+(defn app-header []
+  [:header "Cardinal"])
+
+(defn app-card [text]
+  [:div text])
 
 (defn app []
   (fn []
     [:div
-     [:h1 "Cardinal"]
+     (app-header)
      [:div
       [:p "Fact about 44"]
       [:button {:on-click get-fact} "load fact"]
-      [:p (:fact @app-state)]
+      [:p (:text @app-state)]
+      [:p (str "User typed " (:input @app-state))]
       (app-input)]]))
 
 (reagent/render-component [app]
