@@ -6,10 +6,37 @@
 
 (defonce base-url "http://numbersapi.com")
 
-(defonce app-state (atom {:text "" :input "" :type "math"}))
+(defonce app-state (atom {:text "" :input "" :type "math" :month "October" :day 4}))
 
-(defn format-base-url [url data type]
-  (str url "/" data "/" type "?json"))
+(defonce month-options
+         [{:value 1 :name "January"}
+          {:value 2 :name "February"}
+          {:value 3 :name "March"}
+          {:value 4 :name "April"}
+          {:value 5 :name "May"}
+          {:value 6 :name "June"}
+          {:value 7 :name "July"}
+          {:value 8 :name "August"}
+          {:value 9 :name "September"}
+          {:value 10 :name "October"}
+          {:value 11 :name "November"}
+          {:value 12 :name "December"}])
+
+(defonce type-options
+         [{:value "math" :name "Facts about numbers"}
+          {:value "trivia" :name "Number trivia"}
+          {:value "date" :name "Facts about a date"}])
+
+
+
+;; todo: refactor to reduce repetitive code
+(defn format-base-url [url input type]
+  (cond
+    (= type "trivia") (str url "/" input "?json")
+    (= type "date") (str url "/" (:month input) "/" (:day input) "?json")
+    :else (str url "/" input "/" type "?json")))
+
+
 
 (defn get-fact []
   (GET (format-base-url base-url (:input @app-state) (:type @app-state))
@@ -24,15 +51,26 @@
   [:input {:type        "text"
            :placeholder "Type a number"
            :value       (:input @app-state)
-           :on-change   (fn [e] (swap! app-state assoc :input (.. e -target -value)))}])
+           :on-change   #(swap! app-state assoc :input (-> % .-target .-value))}])
+
+
+;; todo : generalize component to take options as args
+(defn app-select []
+  [:select {:on-change #(swap! app-state assoc :type (-> % .-target .-value))}
+   [:option {:value "math"} "Facts about numbers"]
+   [:option {:value "trivia"} "Number trivia"]
+   [:option {:value "date"} "Facts about dates"]])
 
 
 (defn app-form []
   [:div
+   [:p (:type @app-state)]
+   (app-select)
    [:label ""]
    (app-input)
    [:button {:on-click get-fact
              :disabled (= (count (:input @app-state)) 0)} "load fact"]])
+
 
 
 (defn app-header []
@@ -42,11 +80,11 @@
   [:div text])
 
 (defn app []
-    [:div
-     (app-header)
-     [:div
-      (app-card (:text @app-state))
-      (app-form)]])
+  [:div
+   (app-header)
+   [:div
+    (app-card (:text @app-state))
+    (app-form)]])
 
 (reagent/render-component [app]
                           (. js/document (getElementById "app")))
