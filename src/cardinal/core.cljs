@@ -59,6 +59,10 @@
    (for [option options]
      [:option {:key (:value option) :value (:value option)} (:name option)])])
 
+(defn app-date-selector []
+  [:div  (app-select month-options :month)
+  (app-select (for [i (range 1 32)] {:value i :name i}) :day)])
+
 
 
 (defn app-form []
@@ -66,7 +70,7 @@
    [:p (:type @app-state)]
    (app-select type-options :type)
    (if (= (:type @app-state) "date")
-     (app-select (for [i (range 1 32)] {:value i :name i}) :day))
+     (app-date-selector))
    ;; (app-select)
    [:label ""]
    (app-input)
