@@ -4,6 +4,8 @@
 
 (enable-console-print!)
 
+;; constants, state, and utilities
+
 (defonce base-url "http://numbersapi.com?json")
 
 (defonce app-state (atom {:text "" :input "" :type "math" :month "1" :day 1}))
@@ -27,8 +29,9 @@
           {:value "trivia" :name "Number trivia"}
           {:value "date" :name "Facts about a date"}])
 
-;; inserts into url a substring at given index
+
 (defn url-insert [s sb i]
+  "Inserts into url a substring at given index"
   (str (subs s 0 i) "/" sb (subs s i)))
 
 (defn get-url [url input type]
@@ -48,6 +51,9 @@
                          (fn [response]
                            (swap! app-state assoc :text (:text response)))})
   (swap! app-state assoc :input ""))
+
+
+;; UI Components
 
 (defn app-input []
   [:input {:type        "text"
@@ -69,26 +75,25 @@
 
 (defn app-form []
   [:div
-   [:p (:month @app-state)]
    (app-select type-options :type)
    (if (= (:type @app-state) "date")
      (app-date-selector))
    [:label ""]
    (app-input)
-   [:button {:on-click get-number-data} "Load data"]])
-
+   [:button.bg-red-dark.text-white {:on-click get-number-data} "Load data"]])
 
 
 (defn app-header []
-  [:header "Cardinal"])
+  [:header.bg-red-dark
+    [:h1.text-yellow-lightest.px-2.py-4 "Cardinal"]])
 
 (defn app-card [text]
-  [:div text])
+  [:div.border-2.border-purple text])
 
 (defn app []
-  [:div
+  [:div.h-screen.bg-yellow-lightest
    (app-header)
-   [:div
+   [:div.border-2.border-green
     (app-card (:text @app-state))
     (app-form)]])
 

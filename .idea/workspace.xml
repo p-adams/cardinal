@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a74638e7-dbc2-4aa7-b94f-ee5ed14fd3e1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.rebel_readline_history" beforeDir="false" afterPath="$PROJECT_DIR$/.rebel_readline_history" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cardinal/core.cljs" beforeDir="false" afterPath="$PROJECT_DIR$/src/cardinal/core.cljs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +17,8 @@
       <file leaf-file-name="core.cljs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cardinal/core.cljs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="77" column="51" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
+            <state relative-caret-position="269">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
@@ -44,9 +43,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="171" />
-    <option name="y" value="37" />
-    <option name="width" value="1103" />
+    <option name="x" value="693" />
+    <option name="y" value="33" />
+    <option name="width" value="620" />
     <option name="height" value="722" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -183,7 +182,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="171" y="37" width="1103" height="722" extended-state="0" />
+    <frame x="693" y="33" width="620" height="722" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -197,10 +196,10 @@
       <window_info anchor="bottom" id="Version Control" order="1" />
       <window_info anchor="bottom" id="Run" order="5" />
       <window_info anchor="right" id="Leiningen" order="9" weight="0.32904884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.32935154" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.32935154" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18378888" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18378888" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -242,8 +241,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cardinal/core.cljs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="77" column="51" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
+        <state relative-caret-position="269">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
