@@ -54,18 +54,20 @@
            :on-change   #(swap! app-state assoc :input (-> % .-target .-value))}])
 
 
-;; todo : generalize component to take options as args
-(defn app-select []
-  [:select {:on-change #(swap! app-state assoc :type (-> % .-target .-value))}
-   [:option {:value "math"} "Facts about numbers"]
-   [:option {:value "trivia"} "Number trivia"]
-   [:option {:value "date"} "Facts about dates"]])
+(defn app-select [options key]
+  [:select {:on-change #(swap! app-state assoc key (-> % .-target .-value))}
+   (for [option options]
+     [:option {:key (:value option) :value (:value option)} (:name option)])])
+
 
 
 (defn app-form []
   [:div
    [:p (:type @app-state)]
-   (app-select)
+   (app-select type-options :type)
+   (if (= (:type @app-state) "date")
+     (app-select (for [i (range 1 32)] {:value i :name i}) :day))
+   ;; (app-select)
    [:label ""]
    (app-input)
    [:button {:on-click get-fact
