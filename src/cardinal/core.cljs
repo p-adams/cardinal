@@ -4,9 +4,9 @@
 
 (enable-console-print!)
 
-(defonce base-url "http://numbersapi.com")
+(defonce base-url "http://numbersapi.com?json")
 
-(defonce app-state (atom {:text "" :input "" :type "math" :month "October" :day 4}))
+(defonce app-state (atom {:text "" :input "" :type "math" :month "1" :day 1}))
 
 (defonce month-options
          [{:value 1 :name "January"}
@@ -27,19 +27,21 @@
           {:value "trivia" :name "Number trivia"}
           {:value "date" :name "Facts about a date"}])
 
+;; inserts into url a substring at given index
+(defn url-insert [s sb i]
+  (str (subs s 0 i) "/" sb (subs s i)))
 
-
-;; todo: refactor to reduce repetitive code
-(defn format-base-url [url input type]
+(defn get-url [url input type]
+  (let [iq (clojure.string/index-of base-url "?")
+        date-string (str (:month @app-state) "/" (:day @app-state) "/date")]
   (cond
-    (= type "trivia") (str url "/" input "?json")
-    (= type "date") (str url "/" (:month input) "/" (:day input) "?json")
-    :else (str url "/" input "/" type "?json")))
+    (= type "trivia") (url-insert base-url input iq)
+    (= type "date") (url-insert base-url date-string iq)
+    :else (url-insert base-url (str input "/" type) iq))))
 
 
-
-(defn get-fact []
-  (GET (format-base-url base-url (:input @app-state) (:type @app-state))
+(defn get-number-data []
+  (GET (get-url base-url (:input @app-state) (:type @app-state))
        {:response-format :json
         :keywords?       true
         :handler
@@ -67,15 +69,13 @@
 
 (defn app-form []
   [:div
-   [:p (:type @app-state)]
+   [:p (:month @app-state)]
    (app-select type-options :type)
    (if (= (:type @app-state) "date")
      (app-date-selector))
-   ;; (app-select)
    [:label ""]
    (app-input)
-   [:button {:on-click get-fact
-             :disabled (= (count (:input @app-state)) 0)} "load fact"]])
+   [:button {:on-click get-number-data} "Load data"]])
 
 
 
